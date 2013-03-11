@@ -7,10 +7,62 @@
     <link rel="stylesheet" type="text/css" href="stylesheets/stylesheet.css" media="screen" />
     <link rel="stylesheet" type="text/css" href="stylesheets/pygment_trac.css" media="screen" />
     <link rel="stylesheet" type="text/css" href="stylesheets/print.css" media="print" />
+    <link rel="stylesheet" type="text/css" href="stylesheets/fontello.css" media="screen"/>
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+    <script src="javascripts/jquery.flyout.js" type="text/javascript" charset="utf-8"></script>
+    <script>
+      $(document).ready(function(){
+        $("#flyoutButton").flyout({radius: '125', });
+      });
+    </script>
     <!--[if lt IE 9]>
     <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
     <![endif]-->
     <title>Jquery-flyout by rootyb</title>
+    <style type="text/css" media="screen">
+      ul li{
+        list-style: none;
+      }
+
+      ul li{
+        font-family: fontello;
+        padding: 0;
+      }
+
+
+      #flyoutButton{
+        width: 100px;
+        height: 100px;
+        position: relative;
+        font-size: 40px;
+        color: #fff;
+      }
+
+      .buttonContainer{
+        margin: 0 auto;
+      }
+
+      #flyoutButton li{
+        background: #a90329; /* Old browsers */
+        background: -moz-radial-gradient(center, ellipse cover,  #a90329 0%, #8f0222 44%, #6d0019 100%); /* FF3.6+ */
+        background: -webkit-gradient(radial, center center, 0px, center center, 100%, color-stop(0%,#a90329), color-stop(44%,#8f0222), color-stop(100%,#6d0019)); /* Chrome,Safari4+ */
+        background: -webkit-radial-gradient(center, ellipse cover,  #a90329 0%,#8f0222 44%,#6d0019 100%); /* Chrome10+,Safari5.1+ */
+        background: -o-radial-gradient(center, ellipse cover,  #a90329 0%,#8f0222 44%,#6d0019 100%); /* Opera 12+ */
+        background: -ms-radial-gradient(center, ellipse cover,  #a90329 0%,#8f0222 44%,#6d0019 100%); /* IE10+ */
+        background: radial-gradient(ellipse at center,  #a90329 0%,#8f0222 44%,#6d0019 100%); /* W3C */
+        filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#a90329', endColorstr='#6d0019',GradientType=1 ); /* IE6-9 fallback on horizontal gradient */
+        box-shadow: 0px 2px 10px rgba(0,0,0,0.5);
+        text-align: center;
+        border-radius: 50px;
+      }
+
+      #flyoutButton li#mainButton{
+        font-size: 70px;
+      }
+
+
+    </style>
+
   </head>
 
   <body>
@@ -23,44 +75,29 @@
         </header>
 
         <section id="downloads" class="clearfix">
-          <a href="https://github.com/rootyb/jquery-flyout/zipball/master" id="download-zip" class="button"><span>Download .zip</span></a>
-          <a href="https://github.com/rootyb/jquery-flyout/tarball/master" id="download-tar-gz" class="button"><span>Download .tar.gz</span></a>
-          <a href="https://github.com/rootyb/jquery-flyout" id="view-on-github" class="button"><span>View on GitHub</span></a>
+          <a href="https://github.com/justinross/jquery-flyout/zipball/master" id="download-zip" class="button"><span>Download .zip</span></a>
+          <a href="https://github.com/justinross/jquery-flyout/tarball/master" id="download-tar-gz" class="button"><span>Download .tar.gz</span></a>
+          <a href="https://github.com/justinross/jquery-flyout" id="view-on-github" class="button"><span>View on GitHub</span></a>
         </section>
 
         <hr>
 
         <section id="main_content">
           <h3>Welcome to GitHub Pages.</h3>
-
-<p>This automatic page generator is the easiest way to create beautiful pages for all of your projects. Author your page content here using GitHub Flavored Markdown, select a template crafted by a designer, and publish. After your page is generated, you can check out the new branch:</p>
-
-<pre><code>$ cd your_repo_root/repo_name
-$ git fetch origin
-$ git checkout gh-pages
-</code></pre>
-
-<p>If you're using the GitHub for Mac, simply sync your repository and you'll see the new branch.</p>
-
-<h3>Designer Templates</h3>
-
-<p>We've crafted some handsome templates for you to use. Go ahead and continue to layouts to browse through them. You can easily go back to edit your page before publishing. After publishing your page, you can revisit the page generator and switch to another theme. Your Page content will be preserved if it remained markdown format.</p>
-
-<h3>Rather Drive Stick?</h3>
-
-<p>If you prefer to not use the automatic generator, push a branch named <code>gh-pages</code> to your repository to create a page manually. In addition to supporting regular HTML content, GitHub Pages support Jekyll, a simple, blog aware static site generator written by our own Tom Preston-Werner. Jekyll makes it easy to create site-wide headers and footers without having to copy them across every page. It also offers intelligent blog support and other advanced templating features.</p>
-
-<h3>Authors and Contributors</h3>
-
-<p>You can <a href="https://github.com/blog/821" class="user-mention">@mention</a> a GitHub username to generate a link to their profile. The resulting <code>&lt;a&gt;</code> element will link to the contributor's GitHub Profile. For example: In 2007, Chris Wanstrath (<a href="https://github.com/defunkt" class="user-mention">@defunkt</a>), PJ Hyett (<a href="https://github.com/pjhyett" class="user-mention">@pjhyett</a>), and Tom Preston-Werner (<a href="https://github.com/mojombo" class="user-mention">@mojombo</a>) founded GitHub.</p>
-
-<h3>Support or Contact</h3>
-
-<p>Having trouble with Pages? Check out the documentation at <a href="http://help.github.com/pages">http://help.github.com/pages</a> or contact <a href="mailto:support@github.com">support@github.com</a> and we’ll help you sort it out.</p>
+          <p>To try jQuery Flyout, click the button below:</p>
         </section>
-
+        <ul id="flyoutButton">
+          <li>&#x266B;</li>
+          <li>&#x1F50D;</li>
+          <li>&#x1F526;</li>
+          <li>&#x2709;</li>
+          <li>&#x2605;</li>
+          <li>&#x1F464;</li>
+          <li>&#xE729;</li>
+          <li id="mainButton">&#x2665;</li>
+        </ul>
         <footer>
-          Jquery-flyout is maintained by <a href="https://github.com/rootyb">rootyb</a><br>
+          Jquery-flyout is maintained by <a href="https://github.com/justinross">justinross</a><br>
           This page was generated by <a href="http://pages.github.com">GitHub Pages</a>. Tactile theme by <a href="http://twitter.com/jasonlong">Jason Long</a>.
         </footer>
 
