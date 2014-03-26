@@ -1,6 +1,6 @@
 (function( $ ) {
 	$.fn.reverse = [].reverse;
-	$.fn.pathify = function(opts) {
+	$.fn.flyout = function(opts) {
 		//"this" should be a main container, all immediate children should be buttons. A UL and LI's work well.
 		var defaults = {
 			radius: '100', //How large the circle of buttons should be when open. Default: 100
@@ -8,11 +8,11 @@
 			offsetx : '0', //How far along the x axis to offset the flyout circle. Default: 0
 			offsety : '0', //How far along the x axis to offset the flyout circle. Default: 0
 			angleOffset : '0', //What angle to start the circle at. 0 is the top. Default: 0
-			duration : '400', //How long it takes each button to reach its final destination (in ms). Default: 250
+			duration : '400', //How long it takes each button to reach its final destination (in ms). Default: 400
 			delay : '100', //Time between buttons. This causes the cascade effect. Default: 100
 			startRotation: '-180', //The rotation angle the buttons are at before they start moving. Default: -180
 			endRotation: '-360', //The rotation angle the buttons are at when they reach their destination. This should probably be a multiple of 360 (or 0). Default: -360
-			flyoutSizePercent: '75', //What percentage of the main button size the smaller buttons are. Default: 75
+			flyoutSizePercent: '60', //What percentage of the main button size the smaller buttons are. Default: 75
 			reverseOut: 'false', //Whether the buttons should disappear in the opposite order they came out. Default: false
 			reverseIn: 'false',		//Whether the buttons should disappear in the opposite order they came out. Default: false
 			modalBGColor: 'rgba(255,255,255,0.5)', //What color/opacity the modal BG should be when the buttons are out. Default: rgba(255, 255, 255, 0.5)
@@ -25,15 +25,18 @@
 		
 		return this.each(function(){
 			$this = $(this);
-			$this.parent().data('pathifyOpts', options);
 			$this.css({'z-index':'10000'});
-			$this.parent().css({'z-index':'10000'});
-			
+
 			//Find the dimensions of the targeted container
 			var parentWidth = $this.width(), parentHeight = $this.height();
 			btns = $this.children().not("#mainButton");
-			
-			//Size the main button based on the size of the pathified container
+			console.log(parentWidth, parentHeight, btns);
+
+			$this.wrap('<div class="buttonContainer">').parent().css({'width':parentWidth, 'height':parentHeight});
+			$this.parent().data('flyoutOpts', options);
+			$this.parent().css({'z-index':'10000'});
+
+			//Size the main button based on the size of the flyout container
 			mainButton = $("#mainButton", $this);
 			mainButton.width(parentWidth);
 			mainButton.height(parentHeight);
@@ -82,9 +85,9 @@
 			
 			
 			//Set up our new stylesheet
-			$("style[title='pathify']").remove();
-			$("head").append("<style type='text/css' title='pathify'></style>");
-			$pathifyStyle = $("style[title='pathify']");
+			$("style[title='flyout']").remove();
+			$("head").append("<style type='text/css' title='flyout'></style>");
+			$flyoutStyle = $("style[title='flyout']");
 			
 			
 			
@@ -126,8 +129,8 @@
 			currentx = newx;
 			currenty = newy;
 
-			var buttonCSS = ".pathifyButton {-moz-transition: all "+options.duration+"ms; -webkit-transition: all "+options.duration+"ms; -moz-transform:rotate("+options.startRotation+"deg); -webkit-transform:rotate("+options.startRotation+"deg); top: 0; left: 0;}\r\n";
-			$pathifyStyle.append(buttonCSS);
+			var buttonCSS = ".flyoutButton {-moz-transition: all "+options.duration+"ms; -webkit-transition: all "+options.duration+"ms; -moz-transform:rotate("+options.startRotation+"deg); -webkit-transform:rotate("+options.startRotation+"deg); top: 0; left: 0;}\r\n";
+			$flyoutStyle.append(buttonCSS);
 			
 			/*
 			//Iterate through the children of the offset container and get them ready for action
@@ -140,12 +143,13 @@
 					itemID = $this.attr("id");
 				}
 				else{
-					itemID = "pathify"+i;
+					itemID = "flyout"+i;
 					$this.attr("id",itemID);
 				}	
 			});
 			*/
 			
+			/*Add modal overlay. Disabled for now.
 			if(options.hardcoreMode === 'true'){
 				// Circular modal flyout - animated
 				//add the modal BG
@@ -162,7 +166,7 @@
 				modalCSS = "#modalCoverContainer{-moz-transition: all " + modalAnimateTime + "ms; transition: all " + modalAnimateTime + "ms; -webkit-transition: all " + modalAnimateTime + "ms; width: 0; height: 0; position: fixed;}\r\n";
 				modalCSS += "#modalCover{width: 100%; height:100%;margin-left: -50%; margin-top: -50%;background-color:"+options.modalBGColor+";-webkit-border-radius: 2000px;border-radius: 2000px;}\r\n";
 				modalCSS += "#modalCoverContainer.open{width: 4000px; height: 4000px;}\r\n";
-				$pathifyStyle.append(modalCSS);
+				$flyoutStyle.append(modalCSS);
 		
 				$(window).resize(function(){
 					modalCenter = findFlyoutCenter();
@@ -174,21 +178,22 @@
 				$('body').append('<div id="modalCoverContainer"></div>');
 				modalCSS = "#modalCoverContainer{-moz-transition: all " + modalAnimateTime + "ms; transition: all " + modalAnimateTime + "ms; -webkit-transition: all " + modalAnimateTime + "ms; width: 100%; height:100%;background-color:"+options.modalBGColor+"; opacity: 0; pointer-events:none; display: block; position: fixed; top: 0; left: 0; z-index: 100;}\r\n";
 				modalCSS += "#modalCoverContainer.open{opacity: 1; pointer-events: auto;}\r\n";
-				$pathifyStyle.append(modalCSS);
+				$flyoutStyle.append(modalCSS);
 			}
+			*/
 			
 			btns.each(function(i){
 				var $this = $(this), buttonTop = currenty - parseFloat(options.offsety), buttonLeft = currentx + parseFloat(options.offsetx);
-				$this.addClass("pathifyButton");
+				$this.addClass("flyoutButton");
 				if($this.attr("id")){
 					itemID = $this.attr("id");
 				}
 				else{
-					itemID = "pathify"+i;
+					itemID = "flyout"+i;
 					$this.attr("id",itemID);
 				}
 				var openCSS = "#"+itemID+".open{top: "+buttonTop+"px; left: "+buttonLeft+"px; -moz-transform:rotate("+options.endRotation+"deg); -webkit-transform:rotate("+options.endRotation+"deg);}\r\n";
-				$pathifyStyle.append(openCSS);
+				$flyoutStyle.append(openCSS);
 				//Now let's do some rotation math. Hooray!
 				newx = Math.cos(angleRad) * currentx + -Math.sin(angleRad) * currenty;
 				newy = Math.sin(angleRad) * currentx + Math.cos(angleRad) * currenty;
@@ -197,34 +202,45 @@
 			});
 			
 			
-			
-			//Do stuff when the button is clicked.
-			$(".homeButton").toggle(function(){
-				if(!$("#mainButton").hasClass("showingContent")){
-					if(options.reverseOut.toLowerCase() === "true"){var toggleButtons = $(".pathifyButton").reverse();}
-					else{var toggleButtons = $(".pathifyButton");}
-					$("#modalCoverContainer").addClass("open");
-					$("#modalCoverContainer").one('click', function(){
-						$("#mainButton").click();
-					});
-					toggleButtons.each(function(i){
-						var $button = $(this);
-						var delayTime = i * options.delay;
-						window.setTimeout(function(){
-							$button.addClass("open");},delayTime);
-					});
-				}
-				else{ $("#mainButton").click();}
-			},function(){
-				if(options.reverseIn.toLowerCase() === "true"){var toggleButtons = $(".pathifyButton").reverse();}
-				else{var toggleButtons = $(".pathifyButton");}
-				$("#modalCoverContainer").removeClass("open");
+			function openFlyout(clickedEl){
+				if(options.reverseOut.toLowerCase() === "true"){var toggleButtons = $(".flyoutButton").reverse();}
+				else{var toggleButtons = $(".flyoutButton");}
+				/*$("#modalCoverContainer").addClass("open");
+				$("#modalCoverContainer").one('click', function(){
+					$("#mainButton").click();
+				});*/
+				toggleButtons.each(function(i){
+					var $button = $(this);
+					var delayTime = i * options.delay;
+					window.setTimeout(function(){
+						$button.addClass("open");},delayTime);
+				});
+				clickedEl.one('click.flyout', function(){
+					console.log("closing");
+					closeFlyout($(this));
+				});
+			}
+
+			function closeFlyout(clickedEl){
+				if(options.reverseIn.toLowerCase() === "true"){var toggleButtons = $(".flyoutButton").reverse();}
+				else{var toggleButtons = $(".flyoutButton");}
+				//$("#modalCoverContainer").removeClass("open");
 				toggleButtons.each(function(i){
 					var $button = $(this);
 					var delayTime = i * options.delay;
 					window.setTimeout(function(){
 						$button.removeClass("open");},delayTime);
 				});
+				clickedEl.one('click.flyout', function(){
+					console.log("opening!");
+					openFlyout($(this));
+				})
+			}
+
+			//Do stuff when the button is clicked.
+			$("#mainButton").one('click.flyout', function(){
+				console.log("clicked!");
+				openFlyout($(this));
 			});
 		});
 	};
